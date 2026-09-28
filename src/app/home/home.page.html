@@ -1,46 +1,11 @@
 <ion-content [fullscreen]="true">
-  <main class="menu-page">
+  <main class="menu-page" id="inicio">
     <header class="topbar">
       <a class="brand" href="#inicio" aria-label="Quetzalito, inicio">
         <span class="brand-mark">Q</span>
         <span class="brand-name">quetzalito</span>
       </a>
     </header>
-
-    <section class="hero" id="inicio">
-      <div class="hero-orb" aria-hidden="true"></div>
-      <div class="hero-copy">
-        <p class="eyebrow">Cocina salvadoreña · hecha con corazón</p>
-        <h1 class="gravity-title" aria-label="El sabor de El Salvador.">
-          <span aria-hidden="true">E</span><span aria-hidden="true">l</span>
-          <span aria-hidden="true"> </span><span aria-hidden="true">s</span><span aria-hidden="true">a</span><span aria-hidden="true">b</span><span aria-hidden="true">o</span><span aria-hidden="true">r</span>
-          <span aria-hidden="true"> </span><span aria-hidden="true">d</span><span aria-hidden="true">e</span><br />
-          <em><span aria-hidden="true">E</span><span aria-hidden="true">l</span><span aria-hidden="true"> </span><span aria-hidden="true">S</span><span aria-hidden="true">a</span><span aria-hidden="true">l</span><span aria-hidden="true">v</span><span aria-hidden="true">a</span><span aria-hidden="true">d</span><span aria-hidden="true">o</span><span aria-hidden="true">r</span><span aria-hidden="true">.</span></em>
-        </h1>
-        <p class="hero-description">De San Salvador a tu mesa: platos caseros y recetas de familia preparadas al momento con sabor, tradición y ese toque de hogar.</p>
-        <a class="hero-link" href="#menu">Ver el menú <ion-icon name="arrow-forward"></ion-icon></a>
-      </div>
-
-      <div class="hero-info" aria-label="Información principal del restaurante">
-        <div class="info-card info-card-primary">
-          <span class="info-kicker">Especialidades</span>
-          <h2>Platos con raíces</h2>
-          <p>Desde pupusas y yuca frita hasta sopas y carnes al carbón, cada receta revive la esencia de la cocina de El Salvador.</p>
-        </div>
-        <div class="info-row">
-          <div class="info-card">
-            <span class="info-kicker">Horario</span>
-            <strong>9:00 AM – 9:00 PM</strong>
-          </div>
-          <div class="info-card">
-            <span class="info-kicker">Ubicación</span>
-            <strong>San Salvador</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-stamp"><span>Desde San Salvador</span><strong>QTZ</strong></div>
-    </section>
 
     <section class="menu-section" id="menu">
       <div class="section-heading">
@@ -73,12 +38,12 @@
       <div class="menu-grid">
         @for (item of filteredItems; track item.id; let itemIndex = $index) {
           <article class="menu-card" [attr.data-index]="itemIndex + 1" [style.animation-delay.ms]="itemIndex * 70">
-            <div class="card-image-wrap">
+            <button class="card-image-wrap card-image-button" type="button" (click)="showDetails(item)" [attr.aria-label]="'Ver detalles de ' + item.name">
               <img [src]="item.image" [alt]="item.name" />
               <span class="image-sheen" aria-hidden="true"></span>
               @if (item.badge) { <span class="item-badge">{{ item.badge }}</span> }
               @if (item.favorite) { <span class="favorite-mark"><ion-icon name="star"></ion-icon></span> }
-            </div>
+            </button>
             <div class="card-content">
               <div class="card-title-row"><h3>{{ item.name }}</h3><strong>{{ formatPrice(item.price) }}</strong></div>
               <p>{{ item.description }}</p>
@@ -93,6 +58,26 @@
       </div>
     </section>
 
+    @if (selectedItem; as item) {
+      <div class="details-backdrop" (click)="closeDetails()">
+        <section class="details-dialog" role="dialog" aria-modal="true" aria-labelledby="details-title" (click)="$event.stopPropagation()">
+          <button class="details-close" type="button" (click)="closeDetails()" aria-label="Cerrar detalles" autofocus>
+            <ion-icon name="close"></ion-icon>
+          </button>
+          <img class="details-image" [src]="item.image" [alt]="item.name" />
+          <div class="details-copy">
+            <p class="details-category">{{ item.category }}</p>
+            <h2 id="details-title">{{ item.name }}</h2>
+            <strong class="details-price">{{ formatPrice(item.price) }}</strong>
+            <p class="details-description">{{ item.description }}</p>
+            <button class="details-add" type="button" (click)="addSelectedToCart()">
+              <span>Añadir al pedido</span><ion-icon name="add"></ion-icon>
+            </button>
+          </div>
+        </section>
+      </div>
+    }
+
     @if (cartCount > 0) {
       <button class="cart-preview" type="button" (click)="openCart()" aria-label="Abrir carrito">
         <span class="cart-preview-icon"><ion-icon name="bag-handle"></ion-icon><b>{{ cartCount }}</b></span>
@@ -102,7 +87,7 @@
       </button>
     }
 
-    <footer class="footer"><span>© 2024 Quetzalito</span><span>Hecho para compartir <span class="footer-dot">·</span> Con amor desde El Salvador</span></footer>
+    <footer class="footer"><span>© ADNDigitalsv</span><span>Hecho para compartir <span class="footer-dot">·</span> Con amor desde El Quetzalito</span></footer>
   </main>
 
 </ion-content>

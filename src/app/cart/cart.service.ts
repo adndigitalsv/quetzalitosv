@@ -97,6 +97,7 @@ export class CartService {
   ];
 
   cartItems: MenuItem[] = [];
+  dishNotes: Record<number, string> = {};
   customerName = '';
   customerPhone = '';
   orderType: OrderType = 'local';
@@ -123,6 +124,9 @@ export class CartService {
     const itemIndex = this.cartItems.findIndex((cartItem) => cartItem.id === item.id);
     if (itemIndex === -1) return;
     this.cartItems = this.cartItems.filter((_, index) => index !== itemIndex);
+    if (!this.cartItems.some((cartItem) => cartItem.id === item.id)) {
+      delete this.dishNotes[item.id];
+    }
   }
 
   getItemQuantity(item: MenuItem): number {
@@ -144,7 +148,11 @@ export class CartService {
 
     const orderLines = this.cartProducts.map((item) => {
       const quantity = this.getItemQuantity(item);
-      return `🍽️ *${quantity} x ${item.name}*\n   ${this.formatPrice(item.price * quantity)}`;
+      const note = this.dishNotes[item.id]?.trim();
+      return [
+        `🍽️ *${quantity} x ${item.name}*\n   ${this.formatPrice(item.price * quantity)}`,
+        ...(note ? [`   📝 Nota: ${note}`] : []),
+      ].join('\n');
     });
     const orderTypeLabel = {
       local: 'Comer en el local',

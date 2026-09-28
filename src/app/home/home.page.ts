@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonIcon } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { add, arrowForward, bagHandle, remove, search, star } from 'ionicons/icons';
+import { add, arrowForward, bagHandle, close, remove, search, star } from 'ionicons/icons';
 import { CartService } from '../cart/cart.service';
 
 type Category = 'Todo' | 'Favoritos' | 'Antojitos' | 'Platos fuertes' | 'Bebidas';
@@ -28,6 +28,7 @@ export class HomePage {
   readonly categories: Category[] = ['Todo', 'Favoritos', 'Antojitos', 'Platos fuertes', 'Bebidas'];
   selectedCategory: Category = 'Todo';
   searchTerm = '';
+  selectedItem: MenuItem | null = null;
   readonly menuItems: MenuItem[] = [
     {
       id: 1,
@@ -110,7 +111,7 @@ export class HomePage {
   ];
 
   constructor(public readonly cart: CartService, private readonly router: Router) {
-    addIcons({ add, arrowForward, bagHandle, remove, search, star });
+    addIcons({ add, arrowForward, bagHandle, close, remove, search, star });
   }
 
   get filteredItems(): MenuItem[] {
@@ -138,6 +139,25 @@ export class HomePage {
 
   addToCart(item: MenuItem): void {
     this.cart.addToCart(item);
+  }
+
+  showDetails(item: MenuItem): void {
+    this.selectedItem = item;
+  }
+
+  closeDetails(): void {
+    this.selectedItem = null;
+  }
+
+  addSelectedToCart(): void {
+    if (!this.selectedItem) return;
+    this.addToCart(this.selectedItem);
+    this.closeDetails();
+  }
+
+  @HostListener('document:keydown.escape')
+  handleEscape(): void {
+    this.closeDetails();
   }
 
   removeFromCart(item: MenuItem): void {

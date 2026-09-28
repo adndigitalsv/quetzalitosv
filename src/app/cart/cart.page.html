@@ -24,6 +24,9 @@
                   <b>{{ getItemQuantity(item) }}</b>
                   <button type="button" (click)="cart.addToCart(item)" aria-label="Añadir una unidad"><ion-icon name="add"></ion-icon></button>
                 </div>
+                <label class="dish-note">Nota para este platillo (opcional)
+                  <textarea [(ngModel)]="cart.dishNotes[item.id]" maxlength="180" placeholder="Ej. Sin cebolla, poco picante..." rows="2"></textarea>
+                </label>
               </div>
               <strong class="item-total">{{ formatPrice(item.price * getItemQuantity(item)) }}</strong>
             </article>

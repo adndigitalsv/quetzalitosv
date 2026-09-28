@@ -24,6 +24,9 @@ ion-content { --background: var(--cream); }
 .quantity button { align-items: center; background: var(--cream); border: 0; color: var(--ink); display: flex; height: 23px; justify-content: center; width: 23px; }
 .quantity ion-icon { font-size: 13px; }
 .quantity b { font-family: Arial, sans-serif; font-size: 11px; }
+.dish-note { color: var(--muted); display: block; font-family: Arial, sans-serif; font-size: 10px; margin-top: 13px; }
+.dish-note textarea { background: #fff; border: 1px solid var(--line); box-sizing: border-box; color: var(--ink); display: block; font-family: Arial, sans-serif; font-size: 12px; margin-top: 6px; min-height: 54px; padding: 9px 10px; resize: vertical; width: 100%; }
+.dish-note textarea:focus { border-color: var(--terracotta); outline: 0; }
 .customer-form { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 25px; }
 .customer-form label { color: var(--muted); display: block; font-family: Arial, sans-serif; font-size: 10px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; }
 .customer-form input, .customer-form select, .customer-form textarea { background: var(--cream); border: 1px solid var(--line); box-sizing: border-box; color: var(--ink); display: block; font-family: Arial, sans-serif; font-size: 12px; margin-top: 6px; outline: 0; padding: 11px; resize: vertical; width: 100%; }
