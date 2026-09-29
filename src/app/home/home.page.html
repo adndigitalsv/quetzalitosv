@@ -70,6 +70,9 @@
             <h2 id="details-title">{{ item.name }}</h2>
             <strong class="details-price">{{ formatPrice(item.price) }}</strong>
             <p class="details-description">{{ item.description }}</p>
+            <label class="details-note">Comentario para este plato (opcional)
+              <textarea [(ngModel)]="cart.dishNotes[item.id]" maxlength="180" placeholder="Ej. Sin cebolla, poco picante..." rows="2" [attr.aria-label]="'Comentario para ' + item.name"></textarea>
+            </label>
             <button class="details-add" type="button" (click)="addSelectedToCart()">
               <span>Añadir al pedido</span><ion-icon name="add"></ion-icon>
             </button>
