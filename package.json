@@ -10,7 +10,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:gh": "ionic build --prod --base-href=/quetzalito-ioni/",
+    "build:gh": "ionic build --prod --base-href=/quetzalitosv/",
     "deploy": "npm run build:gh && npx angular-cli-ghpages --dir=www"
   },
   "dependencies": {
